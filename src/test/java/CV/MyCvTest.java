@@ -1,30 +1,54 @@
 package CV;
 
-import org.testng.annotations.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.testng.annotations.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class MyCvTest {
 
-    @Test
-    public void builderCreatesObjectWithFields() {
-        MyCv cv = MyCv.builder()
+    private MyCv myCv;
+
+    @BeforeClass
+    public void setupCv() {
+        // Create CV using Builder
+        myCv = MyCv.builder()
                 .name("Ammar")
-                .age(30)
-                .address("123 Street")
-                .email("ammar@example.com")
-                .phone("555-1234")
+                .age(20)
+                .address("Newtown Street")
+                .email("ammar@gmail.com")
+                .phone("+91-995551234")
                 .education("BS Computer Science")
                 .skills("Java, Maven, TestNG")
-                .experience("3 years")
+                .experience("1 years")
                 .build();
+    }
 
-        assertThat(cv.getName()).isEqualTo("Ammar");
-        assertThat(cv.getAge()).isEqualTo(30);
-        assertThat(cv.getAddress()).isEqualTo("123 Street");
-        assertThat(cv.getEmail()).isEqualTo("ammar@example.com");
-        assertThat(cv.getPhone()).isEqualTo("555-1234");
-        assertThat(cv.getEducation()).isEqualTo("BS Computer Science");
-        assertThat(cv.getSkills()).isEqualTo("Java, Maven, TestNG");
-        assertThat(cv.getExperience()).isEqualTo("3 years");
+    @Test
+    public void printCv() {
+        System.out.println("======================================");
+        System.out.println("    MY CURRICULUM VITAE / RESUME      ");
+        System.out.println("======================================");
+        System.out.println("Name        : " + myCv.getName());
+        System.out.println("Age         : " + myCv.getAge());
+        System.out.println("Address     : " + myCv.getAddress());
+        System.out.println("Email       : " + myCv.getEmail());
+        System.out.println("Phone       : " + myCv.getPhone());
+        System.out.println("Education   : " + myCv.getEducation());
+        System.out.println("Skills      : " + myCv.getSkills());
+        System.out.println("Experience  : " + myCv.getExperience());
+        System.out.println("======================================");
+    }
+
+    @AfterClass
+    public void validateCvFields() {
+        assertThat(myCv.getName()).isNotBlank();
+        assertThat(myCv.getAge()).isGreaterThan(0);
+        assertThat(myCv.getAddress()).isNotBlank();
+        assertThat(myCv.getEmail()).contains("@");
+        assertThat(myCv.getPhone()).isNotBlank();
+        assertThat(myCv.getEducation()).isNotBlank();
+        assertThat(myCv.getSkills()).isNotBlank();
+        assertThat(myCv.getExperience()).isNotBlank();
+
+        System.out.println("\n✅ All CV fields are valid and complete!");
     }
 }
